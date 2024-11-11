@@ -19,7 +19,9 @@ def load_mnist():
         elif dataset == "test":
             fname_img = get_filename("data/mnist/t10k-images-idx3-ubyte")
             fname_lbl = get_filename("data/mnist/t10k-labels-idx1-ubyte")
-
+        else:
+            raise ValueError("Unexpected dataset name: %r" % dataset)
+    
         flbl = open(fname_lbl, "rb")
         magic_nr, size = struct.unpack(">II", flbl.read(8))
         lbl = pyarray("b", flbl.read())
@@ -51,7 +53,7 @@ def load_mnist():
 
 
 def load_nietzsche():
-    text = open(get_filename("data/nietzsche.txt")).read().decode("utf-8").lower()
+    text = open(get_filename("data/nietzsche.txt"), "rt").read().lower()
     chars = set(list(text))
     char_indices = {ch: i for i, ch in enumerate(chars)}
     indices_char = {i: ch for i, ch in enumerate(chars)}
